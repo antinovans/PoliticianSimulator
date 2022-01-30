@@ -1,4 +1,5 @@
 EXTERNAL showToggle()
+EXTERNAL changeBG(BG)
 //static variables
 VAR topics = 0
 VAR bee = false
@@ -18,6 +19,7 @@ VAR switch = false
 === q1 ===
 ~temp spectrum = RANDOM(-2,2)
 ~temp previousApproval = Approval
+~changeBG("round1_conference")
 You are at the press conference on the topic of Universal Child Cars.
 After your speech, it the Q&A session with reporters.
 You picked a reporter.
@@ -50,10 +52,10 @@ You picked a reporter.
 	- else:
 	He's neutral about your response.
 }
-
     ->q2
 
 ===q2===
+
 ->ending
 === ending ===
 "Good luck senator!"

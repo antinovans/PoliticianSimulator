@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
 
@@ -42,6 +43,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     private GameObject John;
 
+    //Background Sprites
+    Sprite prologue;
+    Sprite prologue_intro;
+    Sprite round1_conference;
+    //dictinary to store sprites
+    Dictionary<string, Sprite> prologueDict;
+
     //game stats
     bool bee = false;
     bool sock = false;
@@ -54,6 +62,8 @@ public class DialogueManager : MonoBehaviour
     int Money = 10;
     int Approval = 5;
     int Morale = 0;
+    //audio
+    AudioSource source;
 
     private void Awake()
     {
@@ -61,7 +71,19 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("Found more than one Dialogue Manager");
         }
+        source = GetComponent<AudioSource>();
         instance = this;
+        prologueDict = new Dictionary<string, Sprite>();
+        LoadSprites();
+    }
+    private void LoadSprites()
+    {
+        prologue = Resources.Load<Sprite>("Image/Prologue");
+        prologue_intro = Resources.Load<Sprite>("Image/Prologue_Intro");
+        round1_conference = Resources.Load<Sprite>("Image/Round1_Conference");
+        prologueDict.Add("prologue", prologue);
+        prologueDict.Add("prologue_intro", prologue_intro);
+        prologueDict.Add("round1_conference", round1_conference);
     }
 
     public static DialogueManager GetInstance()
@@ -96,8 +118,6 @@ public class DialogueManager : MonoBehaviour
         {
             ContinueStory();
         }
-/*        updateBG();*/
-        updateImage();
     }
 
     public void EnterDialogueMode(Story input)
@@ -161,24 +181,11 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeSentence(string sentence, TextMeshProUGUI TextDisplay)
     {
         TextDisplay.text = "";
-        foreach(char letter in sentence.ToCharArray())
+        source.Play();
+        foreach (char letter in sentence.ToCharArray())
         {
             TextDisplay.text += letter;
             yield return null;
-        }
-    }
-    private void ChangeBG(int input)
-    {
-
-        if (input == 0)
-        {
-            BGImage1.SetActive(true);
-            BGImage2.SetActive(false);
-        }
-        if(input == 1)
-        {
-            BGImage2.SetActive(true);
-            BGImage1.SetActive(false);
         }
     }
     private void ChangeImage(GameObject obj, bool input)
@@ -193,23 +200,9 @@ public class DialogueManager : MonoBehaviour
             obj.SetActive(false);
         }
     }
-    private void updateBG()
+    private void changeBG(Sprite sprite)
     {
-        _currentStory.ObserveVariable("background", (string varName, object newValue) => {
-            ChangeBG((int)newValue);
-        });
-    }
-    private void updateImage()
-    {
-        /*_currentStory.ObserveVariable("Dave", (string varName, object newValue) => {
-            ChangeImage(Dave,(bool)newValue);
-        });
-        _currentStory.ObserveVariable("John", (string varName, object newValue) => {
-            ChangeImage(John, (bool)newValue);
-        });*/
-        /*_currentStory.ObserveVariable("switch", (string varName, object newValue) => {
-            ChangeImage(switchScene, (bool)newValue);
-        });*/
+        BGImage1.GetComponent<Image>().sprite = sprite;
     }
     public void switchChapter()
     {
@@ -257,6 +250,9 @@ public class DialogueManager : MonoBehaviour
     {
         _currentStory.BindExternalFunction("showToggle", () => {
             showToggle();
+        });
+        _currentStory.BindExternalFunction("changeBG", (string name) => {
+            changeBG(prologueDict[name]);
         });
     }
 }

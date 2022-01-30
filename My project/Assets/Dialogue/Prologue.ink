@@ -1,4 +1,5 @@
 EXTERNAL showToggle()
+EXTERNAL changeBG(BG)
 VAR topics = 0
 VAR bee = false
 VAR sock = false
@@ -12,6 +13,7 @@ VAR Money = 0
 VAR Approval = 0
 VAR Morale = 0
 VAR switch = false
+~changeBG("prologue_intro")
 "Welcome!"
 "In this game you will be playing as a senator."
 "your goal is to successfully balance your time within the public eye and in the privacy of your office in order to get re-elected for another term."
@@ -36,18 +38,18 @@ VAR switch = false
 { topics == 1:
     "One more policy?"
 }
-* Anti-Bees
-    ~topics= topics +1
-    ~bee = true
-    ->Intro
+// * Anti-Bees
+//     ~topics= topics +1
+//     ~bee = true
+//     ->Intro
 * Ban On Socks with Sandals
     ~topics= topics +1
     ~sock = true
     ->Intro
-* National Holiday for Cryptid Hunting
-    ~topics= topics +1
-    ~crypid = true
-    ->Intro
+// * National Holiday for Cryptid Hunting
+//     ~topics= topics +1
+//     ~crypid = true
+//     ->Intro
 * Universal Child Cars
     ~topics= topics +1
     ~car = true
