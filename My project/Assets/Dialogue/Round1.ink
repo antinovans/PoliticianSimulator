@@ -40,21 +40,68 @@ You picked a reporter.
     ~add(spectrum*3)
     ->done
 - (done)
-{
-	- Approval > previousApproval + 2:
-	The reporter frowns.
-    Apperantly, he is not satisfied with your answer.
 
-	- Approval < previousApproval - 2:
-    The reporter smiles.
-    He likes your response.
-
-	- else:
-	He's neutral about your response.
-}
     ->q2
 
 ===q2===
+
+~temp spectrum = RANDOM(-2,2)
+~temp previousApproval = Approval
+~changeBG("round1_conference")
+"A whistleblower from within your own office has stated that the Little Lambos Act is a ploy to sell more Teslas. A company that you are currently invested in. Is this accurate? "
+* I believe in the right to participate in the Free Market.
+    ~add(spectrum*-3)
+    ->done
+* This is the first I’m hearing of this, actually.
+    ~add(spectrum*-1.5)
+    ->done
+* Who told you that? Was it Ted? Aw, he sucks! 
+    ~add(spectrum*0.5)
+    ->done
+* I will not give any credence to an unsubstantiated rumor.
+    ~add(spectrum*1.5)
+    ->done
+* I think it’s important that we all take a moment to reflect on these issues and realize no one is truly at fault. We should not allow this to divide our nation.
+    ~add(spectrum*3)
+    ->done
+- (done)
+
+	->q3
+	
+===q3===
+
+~temp spectrum = RANDOM(-2,2)
+~temp previousApproval = Approval
+~changeBG("round1_conference")
+"Your most recent piece of legislation, giving every newborn the right to drive a motor vehicle has been praised by insurance firms. Do you believe that this legislation will negatively impact the insurance rates of your constituents?"
+* Of course not. There will be no insurance!.
+    ~add(spectrum*-3)
+    ->done
+* Their premiums will go up. How is that a bad thing?
+    ~add(spectrum*-1.5)
+    ->done
+* The data is simply not there yet. We have no way of concluding that children are bad at driving. 
+    ~add(spectrum*0.5)
+    ->done
+* It’s not just the insurance firms that are praising this bill. 47% of children blinked when asked if they support enacting this law.
+    ~add(spectrum*1.5)
+    ->done
+* As long as citizens are practicing safe driving habits and not running into any babies, they have nothing to be concerned about.
+    ~add(spectrum*3)
+    ->done
+- (done)
+{
+	- Approval > previousApproval + 2:
+	The baby reporter appreciates your candor.
+    Unfortunately, he is not satisfied with your answer.
+
+	- Approval < previousApproval - 2:
+    The reporter smiles.
+    He seems enthusiastic to report on this news.
+
+	- else:
+	Their eyes gloss over a bit.
+}
 
 ->ending
 === ending ===
